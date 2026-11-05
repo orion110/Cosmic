@@ -1,4 +1,4 @@
-[![Agentic.jpg](https://i.postimg.cc/ZYP7Kb4R/Agentic.jpg)](https://postimg.cc/DmZdxKWk)
+[![cosmic.webp](https://i.postimg.cc/B6s3H2Lt/cosmic.webp)](https://postimg.cc/gwM1PXKP)
 ## Features
 - Terminal mode with streaming responses
 - Modern chat interface 
