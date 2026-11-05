@@ -13,20 +13,20 @@
 
 ```bash
 1. Install and run Ollama
-2. Download `Agentic.html`
+2. Download `index.html`
 3. run : python3 agentic_server.py 
 
 curl -fsSL https://ollama.ai/install.sh | sh
 ollama pull qwen2:0.5b
 ollama serve
 
-python3 agentic_server.py 
+python3 cosmic_server.py 
 ```
 
 ## Installation
 
 ```bash
-flatpak install agentic.flatpak
+flatpak install cosmic.flatpak
 ```
 
 
