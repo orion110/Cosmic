@@ -6,7 +6,7 @@
 - File uploads
 - Chat history & projects
   
-
+[![image.png](https://i.postimg.cc/g0sSthtZ/image.png)](https://postimg.cc/1ggrf8Qm)
 
 
 ## How to Run
