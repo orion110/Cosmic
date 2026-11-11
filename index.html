@@ -4625,6 +4625,7 @@ input[type=file], input[type=file][hidden]{display:none !important; visibility:h
   .ly-stat span { font-size: 11.5px; color: var(--ly-mute); }
   .ly-mpick small { color: var(--ly-mute); }
   .ly-prof-acts { display: flex; gap: 8px; align-items: center; }
+  .ly-prof-money { display: inline-flex !important; align-items: center; justify-content: center; border: 1px solid var(--ly-line); border-radius: 50%; width: 36px; height: 36px; background: transparent; color: inherit; cursor: pointer; }
   .ly-prof-set { display: none !important; border: 1px solid var(--ly-line); border-radius: 50%; width: 36px; height: 36px; }
 
   /* Appearance settings */
@@ -4784,6 +4785,73 @@ input[type=file], input[type=file][hidden]{display:none !important; visibility:h
 }
 .ly-dr-retry{display:flex;align-items:center;gap:10px;margin:6px 0 12px;font-size:13px;opacity:.85}
 .ly-dr-retry .ly-dr-sug{width:auto;padding:4px 12px}
+  /* ── Cosmic Money (ETH wallet) ── */
+  #money-mode-panel { --mn-bg:#f8f8f6; --mn-surface:#fff; --mn-ink:#0a0a0a; --mn-mute:#6b6b6b; --mn-line:#e6e6e2; --mn-hover:#f0f0ee;
+    display:none; position:fixed; top:52px; left:52px; right:0; bottom:0; z-index:950; flex-direction:column; background:var(--mn-bg); color:var(--mn-ink); font-family:"Helvetica Neue",Helvetica,Arial,sans-serif; overflow-y:auto; }
+  body.dark-mode #money-mode-panel { --mn-bg:#0f0f0f; --mn-surface:#171717; --mn-ink:#ececec; --mn-mute:#9a9a9a; --mn-line:#2a2a2a; --mn-hover:#1f1f1f; }
+  #money-mode-panel.rail-open { display:flex !important; }
+  @media (max-width:640px){ #money-mode-panel{ left:0; } }
+  .mn-wrap { width:100%; max-width:460px; margin:0 auto; padding:34px 18px 60px; box-sizing:border-box; }
+  .mn-head { display:flex; align-items:center; justify-content:space-between; margin-bottom:18px; }
+  .mn-head b { font-size:20px; letter-spacing:-.01em; display:flex; align-items:center; gap:9px; }
+  .mn-head small { color:var(--mn-mute); font-size:12px; }
+  .mn-card { background:var(--mn-surface); border:1px solid var(--mn-line); border-radius:18px; padding:20px; margin-bottom:14px; }
+  .mn-bal { font-size:40px; font-weight:700; letter-spacing:-.03em; line-height:1.1; }
+  .mn-bal small { font-size:16px; font-weight:500; color:var(--mn-mute); margin-left:6px; }
+  .mn-usd { color:var(--mn-mute); font-size:14px; margin-top:4px; }
+  .mn-addr { font-family:ui-monospace,Menlo,monospace; font-size:12px; color:var(--mn-mute); word-break:break-all; margin-top:12px; cursor:pointer; }
+  .mn-row { display:flex; gap:8px; }
+  .mn-btn { flex:1; background:var(--mn-ink); color:var(--mn-bg); border:1px solid var(--mn-ink); border-radius:999px; padding:11px 14px; font:600 14px inherit; font-family:inherit; cursor:pointer; }
+  .mn-btn.ghost { background:transparent; color:var(--mn-ink); border-color:var(--mn-line); }
+  .mn-btn:hover { opacity:.85; } .mn-btn:disabled { opacity:.4; cursor:default; }
+  .mn-tabs { display:flex; gap:6px; margin:6px 0 14px; }
+  .mn-tab { flex:1; background:transparent; border:1px solid var(--mn-line); color:var(--mn-mute); border-radius:999px; padding:9px; font:600 13px inherit; font-family:inherit; cursor:pointer; }
+  .mn-tab.on { background:var(--mn-ink); color:var(--mn-bg); border-color:var(--mn-ink); }
+  .mn-in { width:100%; box-sizing:border-box; background:var(--mn-bg); color:var(--mn-ink); border:1px solid var(--mn-line); border-radius:12px; padding:12px 13px; font:14px inherit; font-family:inherit; margin:6px 0 12px; outline:none; }
+  .mn-in:focus { border-color:var(--mn-ink); }
+  .mn-lab { font-size:12px; color:var(--mn-mute); font-weight:600; }
+  .mn-note { font-size:12.5px; color:var(--mn-mute); line-height:1.5; margin:8px 0; }
+  .mn-err { font-size:13px; font-weight:600; margin:8px 0; }
+  .mn-seed { display:grid; grid-template-columns:repeat(3,1fr); gap:6px; margin:12px 0; }
+  .mn-seed span { border:1px solid var(--mn-line); border-radius:10px; padding:8px; font-size:13px; font-family:ui-monospace,Menlo,monospace; }
+  .mn-tx { display:flex; justify-content:space-between; gap:10px; padding:12px 0; border-bottom:1px solid var(--mn-line); font-size:13.5px; }
+  .mn-tx:last-child { border-bottom:0; } .mn-tx small { display:block; color:var(--mn-mute); font-size:12px; margin-top:2px; }
+  .mn-chips { display:flex; flex-wrap:wrap; gap:6px; margin:4px 0 8px; }
+  .mn-chip { border:1px solid var(--mn-line); background:transparent; color:var(--mn-ink); border-radius:999px; padding:5px 11px; font:12.5px inherit; font-family:inherit; cursor:pointer; }
+  .mn-qr { display:flex; justify-content:center; padding:14px; background:#fff; border-radius:14px; margin:10px 0; }
+  .mn-qr svg, .mn-qr img { width:200px; height:200px; }
+  .mn-sum { font-size:14px; line-height:1.9; } .mn-sum div { display:flex; justify-content:space-between; gap:12px; } .mn-sum span:last-child { font-weight:600; text-align:right; word-break:break-all; }
+  .mn-net { font-size:11px; font-weight:700; letter-spacing:.06em; border:1px solid var(--mn-line); border-radius:999px; padding:4px 10px; background:transparent; color:var(--mn-ink); cursor:pointer; font-family:inherit; }
+  /* ── Sign in / sign up ── */
+  #acctGate { position:fixed; inset:0; z-index:13000; background:rgba(0,0,0,.55); display:flex; align-items:center; justify-content:center; padding:16px; font-family:"Helvetica Neue",Helvetica,Arial,sans-serif; }
+  #acctGate .ac-card { background:#fff; color:#0a0a0a; width:min(380px,100%); border-radius:20px; padding:26px 24px 20px; box-sizing:border-box; text-align:center; max-height:94vh; overflow:auto; }
+  body.dark-mode #acctGate .ac-card { background:#171717; color:#ececec; }
+  #acctGate .ac-logo { font-weight:800; font-size:22px; letter-spacing:-.02em; }
+  #acctGate h2 { margin:10px 0 4px; font-size:20px; letter-spacing:-.01em; }
+  #acctGate .ac-sub { color:#6b6b6b; font-size:13px; margin:2px 0 14px; line-height:1.5; }
+  #acctGate .ac-g { display:flex; justify-content:center; min-height:44px; }
+  #acctGate .ac-or { color:#6b6b6b; font-size:12px; margin:12px 0; }
+  #acctGate .ac-in { width:100%; box-sizing:border-box; border:1px solid #d8d8d4; background:transparent; color:inherit; border-radius:12px; padding:12px 13px; font:14px inherit; font-family:inherit; margin-bottom:10px; outline:none; }
+  body.dark-mode #acctGate .ac-in { border-color:#333; }
+  #acctGate .ac-in:focus { border-color:#0a0a0a; } body.dark-mode #acctGate .ac-in:focus { border-color:#ececec; }
+  #acctGate .ac-btn { width:100%; border:1px solid #0a0a0a; background:#0a0a0a; color:#fff; border-radius:999px; padding:12px; font:600 14px inherit; font-family:inherit; cursor:pointer; }
+  body.dark-mode #acctGate .ac-btn { background:#ececec; color:#111; border-color:#ececec; }
+  #acctGate .ac-btn.ghost { background:transparent; color:inherit; border-color:#d8d8d4; width:300px; max-width:100%; }
+  body.dark-mode #acctGate .ac-btn.ghost { border-color:#333; }
+  #acctGate .ac-err { font-size:13px; font-weight:600; margin:0 0 10px; min-height:0; }
+  #acctGate .ac-skip { background:none; border:0; color:#6b6b6b; font:13px inherit; font-family:inherit; margin-top:12px; cursor:pointer; text-decoration:underline; }
+  #acctGate .ac-dev { margin-top:14px; text-align:left; font-size:12.5px; color:#6b6b6b; } #acctGate .ac-dev summary { cursor:pointer; text-align:center; }
+  /* ── Lyra tips ── */
+  .ly-act.tip { font-weight:700; font-size:15px; min-width:44px; }
+  #lyTipDlg { position:fixed; inset:0; z-index:12600; background:rgba(0,0,0,.5); display:flex; align-items:center; justify-content:center; padding:16px; font-family:"Helvetica Neue",Helvetica,Arial,sans-serif; --mn-bg:#f8f8f6; --mn-ink:#0a0a0a; --mn-mute:#6b6b6b; --mn-line:#e6e6e2; }
+  body.dark-mode #lyTipDlg { --mn-bg:#0f0f0f; --mn-ink:#ececec; --mn-mute:#9a9a9a; --mn-line:#2a2a2a; }
+  #lyTipDlg .tp-card { background:var(--mn-bg); color:var(--mn-ink); width:min(360px,100%); border-radius:20px; padding:22px; box-sizing:border-box; }
+  #lyTipDlg .tp-h { font-size:18px; } #lyTipDlg .tp-s { color:var(--mn-mute); font-size:13px; margin:4px 0 12px; line-height:1.5; }
+  #lyTipDlg .tp-chips { display:flex; gap:8px; margin-bottom:6px; }
+  #lyTipDlg .tp-chip { flex:1; border:1px solid var(--mn-line); background:transparent; color:var(--mn-ink); border-radius:999px; padding:10px 0; font:600 14px inherit; font-family:inherit; cursor:pointer; }
+  #lyTipDlg .tp-chip.on { background:var(--mn-ink); color:var(--mn-bg); border-color:var(--mn-ink); }
+  #lyTipDlg .mn-in { width:100%; box-sizing:border-box; background:var(--mn-bg); color:var(--mn-ink); border:1px solid var(--mn-line); border-radius:12px; padding:12px 13px; font:14px inherit; font-family:inherit; margin:6px 0 12px; outline:none; }
+  #lyTipDlg .mn-row { display:flex; gap:8px; } #lyTipDlg .mn-btn { flex:1; background:var(--mn-ink); color:var(--mn-bg); border:1px solid var(--mn-ink); border-radius:999px; padding:11px; font:600 14px inherit; font-family:inherit; cursor:pointer; } #lyTipDlg .mn-btn.ghost { background:transparent; color:var(--mn-ink); border-color:var(--mn-line); }
 </style>
 <style id="agQuietScroll">
 /* No visible scrollbars anywhere. Scrolling with the wheel, trackpad, touch or keys still works. */
@@ -4831,6 +4899,14 @@ html, body, * { scrollbar-width: none !important; -ms-overflow-style: none !impo
         <svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true"><path d="M12 1C12.7 8 16 11.3 23 12C16 12.7 12.7 16 12 23C11.3 16 8 12.7 1 12C8 11.3 11.3 8 12 1Z" fill="currentColor"/></svg>
         <span class="icon-rail-tooltip">Lyra</span>
       </button>
+      <button class="icon-rail-btn" id="railMoneyBtn" onclick="railToggleProgram('money')" aria-label="Cosmic Money">
+        <svg viewBox="0 0 48 48" fill="none" width="21" height="21" aria-hidden="true"><defs><mask id="cmmM" maskUnits="userSpaceOnUse" x="0" y="0" width="48" height="48"><rect width="48" height="48" fill="#fff"/><g fill="#000" stroke="#000" stroke-width="5" stroke-linejoin="round"><path d="M24 6.5L33.5 23.5 24 29 14.5 23.5z"/><path d="M14.5 27.5L24 33 33.5 27.5 24 43z"/></g></mask></defs>
+<g mask="url(#cmmM)"><ellipse cx="24" cy="25" rx="22" ry="8" transform="rotate(-24 24 25)" stroke="currentColor" stroke-width="2.2" fill="none"/></g>
+<g fill="currentColor"><path d="M24 6.5L33.5 23.5 24 29 14.5 23.5z"/><path d="M14.5 27.5L24 33 33.5 27.5 24 43z"/></g>
+<path d="M40 3l1.3 4.2 4.2 1.3-4.2 1.3L40 14l-1.3-4.2-4.2-1.3 4.2-1.3z" fill="currentColor"/>
+<circle cx="6.5" cy="41" r="1.5" fill="currentColor"/><circle cx="9" cy="8" r="1" fill="currentColor"/><circle cx="42.5" cy="39" r="1" fill="currentColor"/></svg>
+        <span class="icon-rail-tooltip">Cosmic Money</span>
+      </button>
       <div class="icon-rail-divider"></div>
       <button class="icon-rail-btn" onclick="orionToggleSidebarCollapse()" aria-label="Toggle sidebar">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="17" height="17"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="3" x2="9" y2="21"/></svg>
@@ -4841,24 +4917,10 @@ html, body, * { scrollbar-width: none !important; -ms-overflow-style: none !impo
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="17" height="17"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
         <span class="icon-rail-tooltip">New chat</span>
       </button>
-      <button class="icon-rail-btn" id="railCustomizeBtn" onclick="orionToggleCustomize()" aria-label="Customize">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="17" height="17">
-          <path d="M12 22c1.25 0 2.5-.5 2.5-2 0-.5-.16-.94-.5-1.5-.42-.66-.5-1.15-.5-1.5 0-1.16 1-2 2.24-2H18a4 4 0 0 0 4-4c0-5-4.5-9-10-9C6.5 2 2 6.5 2 12s4.5 10 10 10Z"/>
-          <circle cx="13.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
-          <circle cx="17.5" cy="10.5" r="1" fill="currentColor" stroke="none"/>
-          <circle cx="8.5" cy="7.5" r="1" fill="currentColor" stroke="none"/>
-          <circle cx="6.5" cy="12.5" r="1" fill="currentColor" stroke="none"/>
-        </svg>
-        <span class="icon-rail-tooltip">Customize</span>
-      </button>
       <div class="icon-rail-divider"></div>
       <button class="icon-rail-btn" id="railTerminalBtn" onclick="railToggleProgram('terminal')" aria-label="Terminal">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="17" height="17"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>
         <span class="icon-rail-tooltip">Terminal</span>
-      </button>
-      <button class="icon-rail-btn" id="railCommunityBtn" onclick="railToggleProgram('community')" aria-label="Community">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="17" height="17"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-        <span class="icon-rail-tooltip">Community</span>
       </button>
       <button class="icon-rail-btn" id="railDictateBtn" onclick="railToggleProgram('dictate')" aria-label="Dictate">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="17" height="17"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
@@ -4886,10 +4948,6 @@ html, body, * { scrollbar-width: none !important; -ms-overflow-style: none !impo
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="17" height="17" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
         <span class="icon-rail-tooltip">Browser</span>
       </button>
-      <button class="icon-rail-btn" id="orionDownloadBtn" onclick="orionOpenDownloadMenu(this)" aria-label="Download chat">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="17" height="17"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-        <span class="icon-rail-tooltip">Download chat</span>
-      </button>
       <button class="icon-rail-btn rail-me" id="railProfileBtn" onclick="nebulaOpenProfile()" aria-label="Your profile">
         <span class="rail-me-av" id="railMeAv">Y</span>
         <span class="icon-rail-tooltip">Your profile</span>
@@ -4906,6 +4964,10 @@ html, body, * { scrollbar-width: none !important; -ms-overflow-style: none !impo
         <li class="orion-nav-item active" id="navChats" onclick="orionSetSidebarView('chats')">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="15" height="15"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
           <span>Chats</span>
+        </li>
+        <li class="orion-nav-item" onclick="orionOpenDownloadMenu(this)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="15" height="15"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          <span>Download chat</span>
         </li>
       </ul>
 
@@ -5165,6 +5227,12 @@ html, body, * { scrollbar-width: none !important; -ms-overflow-style: none !impo
   <div class="cd-root" id="cdRoot"></div>
 </div>
 
+<div id="money-mode-panel" aria-label="Cosmic Money">
+  <button class="rail-program-close" onclick="railToggleProgram('money')" aria-label="Close">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+  </button>
+  <div class="mn-wrap" id="mnRoot"></div>
+</div>
 <!-- ── DICTATE MODE PANEL ── -->
 <div id="agents-mode-panel" aria-label="Agents">
   <button class="rail-program-close" onclick="railToggleProgram('agents')" aria-label="Close">
@@ -5443,7 +5511,6 @@ function showToast(msg) {
 
 // Kept for backward compatibility with anything still calling the original
 // name directly — same as picking "Plain text" from the download menu.
-function downloadChat() { downloadChatAs('txt'); }
 
 function orionOpenDownloadMenu(anchorBtn) {
   const existing = document.getElementById('orionDownloadMenu');
@@ -8366,9 +8433,6 @@ async function chatCompletionStream({ model, messages, options, signal, constell
   }
 }
 
-function getBrandName() {
-  return CONSTELLATION_PERSONALITIES[getActiveConstellationKey()].name;
-}
 
 // One name for the assistant everywhere: if the user picked a named voice for this
 // constellation, the assistant goes by that voice's name (Sol, Hubble...); otherwise
@@ -9512,17 +9576,6 @@ function vmOpts() {
   let o = {}; try { localStorage.removeItem('NEBULA_VM_OPTS'); } catch (e) {}
   return Object.assign({}, VM_OPT_DEFAULTS, o);
 }
-function vmSetOpt(k, v) {
-  const o = vmOpts(); o[k] = v;
-  try { localStorage.setItem('NEBULA_VM_OPTS', JSON.stringify(o)); } catch (e) {}
-  vmApplyOpts();
-  if (k === 'cues' && v === 'on') vmCue('listen');
-  else vmSetStyle(vmGetStyle(), true);
-}
-function vmResetOpts() {
-  try { localStorage.removeItem('NEBULA_VM_OPTS'); } catch (e) {}
-  vmApplyOpts(); vmSetStyle(vmGetStyle(), true);
-}
 function vmApplyOpts() {
   const o = vmOpts(), b = document.body, root = document.documentElement.style;
   if (!b) return;
@@ -9549,12 +9602,6 @@ function vmSendNow() {
   if (!vmAudioChunks.length) return;
   vmSilenceStart = null; vmSpeechDetected = false;
   try { vmMediaRecorder.stop(); } catch (e) {}
-}
-function vmPlus() {
-  // Claude's + : leave voice and drop into typing with the attach menu ready
-  closeVoiceMode();
-  const inp = document.getElementById('orion-input'); if (inp) inp.focus();
-  const att = document.querySelector('[aria-label="Attach a file"]'); if (att) att.click();
 }
 function vmSetConvo(you, ai) {
   const y = document.getElementById('vm-you'), a = document.getElementById('vm-ai');
@@ -10867,6 +10914,8 @@ function railToggleProgram(name) {
       lyraOnOpen();
     } else if (name === 'agents') {
       agentsOnOpen();
+    } else if (name === 'money') {
+      moneyOnOpen();
     } else if (name === 'code') {
       codeOnOpen();
     }
@@ -11306,16 +11355,6 @@ function lyraSearchFor(q) {
   const j = document.getElementById('lyJump'); if (j) j.value = '';
   lyraSetView('search', { query: q });
 }
-function lyraJumpKey(e) {
-  if (e.key === 'Escape') { e.target.value = ''; e.target.blur(); return; }
-  if (e.key !== 'Enter') return;
-  const v = e.target.value.trim();
-  if (!v) return;
-  e.target.value = '';
-  const key = v.toLowerCase();
-  const hit = LYRA_NAV.find(([k, l]) => k !== 'asklyra' && (k === key || l.toLowerCase() === key));
-  if (hit) lyraSetView(hit[0]); else lyraSetView('search', { query: v });
-}
 document.addEventListener('keydown', e => {
   if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
     const panel = document.getElementById('lyra-mode-panel');
@@ -11592,6 +11631,7 @@ function lyraFootEl(p, onPostPage) {
   foot.appendChild(lyraActBtn('sv', 'save', null, p.saved ? 'Remove from saved' : 'Save', p.saved, () => lyraToggleSave(p.id)));
   const shareBtn = lyraActBtn('sh', 'share', null, 'Send in a message', null, () => lyraOpenShare(p, shareBtn));
   foot.appendChild(shareBtn);
+  if (!p.mine) { const tipBtn = lyraEl('button', 'ly-act tip', '$'); tipBtn.type = 'button'; tipBtn.title = 'Tip @' + p.who; tipBtn.setAttribute('aria-label', 'Tip the author'); tipBtn.onclick = e => { e.stopPropagation(); lyraOpenTip(p); }; foot.appendChild(tipBtn); }
   if (lyraState.prefs.personas.lyra !== false) foot.appendChild(lyraActBtn('ask', 'spark', null, 'Ask Lyra about this post', null, () => lyraOpenDrawer({ post: p, ask: 'Explain this post.' })));
   if (onPostPage) foot.appendChild(lyraActBtn('cont', 'comment', null, 'Continue in chat', null, () => lyraContinueInChat(p)));
   if (!onPostPage) {
@@ -12791,7 +12831,10 @@ function lyraBuildProfile(main) {
     const acts_ = lyraEl('div', 'ly-prof-acts');
     const setBtn = lyraEl('button', 'ly-iconbtn ly-prof-set'); setBtn.type = 'button'; setBtn.title = 'Settings'; setBtn.setAttribute('aria-label', 'Lyra settings');
     setBtn.appendChild(lyraSvg(LYRA_ICONS.settings)); setBtn.onclick = () => lyraSetView('settings');
-    acts_.appendChild(setBtn); acts_.appendChild(act);
+    const moneyBtn = lyraEl('button', 'ly-iconbtn ly-prof-money'); if (typeof MONEY_LOGO !== 'undefined') moneyBtn.insertAdjacentHTML('beforeend', '<svg viewBox="0 0 48 48" fill="none" width="22" height="22" aria-hidden="true">' + MONEY_LOGO + '</svg>'); else moneyBtn.textContent = '$'; moneyBtn.type = 'button'; moneyBtn.title = 'Cosmic Money — send, tip, stake'; moneyBtn.setAttribute('aria-label', 'Open Cosmic Money');
+    moneyBtn.style.fontWeight = '700'; moneyBtn.style.fontSize = '15px';
+    moneyBtn.onclick = () => { if (typeof moneyPanelOpen === 'function' && !moneyPanelOpen()) railToggleProgram('money'); };
+    acts_.appendChild(setBtn); acts_.appendChild(moneyBtn); acts_.appendChild(act);
     head.appendChild(acts_);
   }
   else {
@@ -15311,9 +15354,6 @@ function orionOpenModelPicker(anchorBtn) {
     n => n.toLowerCase().startsWith('mistral') || n.toLowerCase().startsWith('mixtral'),
     n => n.toLowerCase().startsWith('gemma')
   ];
-  function oneOfEach(models) {
-    return FAMILY_MATCHERS.map(match => models.find(match)).filter(Boolean);
-  }
 
   // Try to fetch real models, still filtered to the active constellation's family
   fetch(`${ollamaHost()}/api/tags`)
@@ -19462,50 +19502,7 @@ function getData(){
   }
 }
 
-function drawRadial(){
-  const cx = W/2, cy = H/2;
 
-  for(let i=0;i<bufferLength;i++){
-    const v = smoothData[i]/255;
-    const angle = i/bufferLength * Math.PI*2;
-    const len = v * 200;
-
-    const x1 = cx + Math.cos(angle)*150;
-    const y1 = cy + Math.sin(angle)*150;
-    const x2 = cx + Math.cos(angle)*(150+len);
-    const y2 = cy + Math.sin(angle)*(150+len);
-
-    ctx.beginPath();
-    ctx.moveTo(x1,y1);
-    ctx.lineTo(x2,y2);
-    ctx.strokeStyle = "black";
-    ctx.lineWidth = 2;
-    ctx.stroke();
-  }
-}
-
-function drawSpiral(){
-  const cx = W/2, cy = H/2;
-
-  for(let i=0;i<bufferLength;i++){
-    const v = smoothData[i]/255;
-    const angle = i/bufferLength * Math.PI*8;
-    const radius = 50 + i*0.5;
-    const len = v * 150;
-
-    const x1 = cx + Math.cos(angle)*radius;
-    const y1 = cy + Math.sin(angle)*radius;
-    const x2 = cx + Math.cos(angle)*(radius+len);
-    const y2 = cy + Math.sin(angle)*(radius+len);
-
-    ctx.beginPath();
-    ctx.moveTo(x1,y1);
-    ctx.lineTo(x2,y2);
-    ctx.strokeStyle = "black";
-    ctx.lineWidth = 2;
-    ctx.stroke();
-  }
-}
 
 // wave orb visualizer
 const waveOrb = document.getElementById('waveOrb');
@@ -21163,13 +21160,6 @@ function fmPlayerWindow() {
   }
 }
 
-function openExtensionsGrid() {
-  const panel = document.getElementById('extensionPanel');
-  if (!panel) return;
-  panel.classList.add('open');
-  document.body.classList.add('extensions-open');
-  showExtensionLauncher();
-}
 
 function showExtensionLauncher() {
   const iframe = document.getElementById('extensionModalIframe');
@@ -21507,6 +21497,7 @@ function closeExtensionModal() {
     <h3>Settings</h3>
     <button type="button" class="orion-customize-close" onclick="orionToggleSettings()" aria-label="Close settings panel">✕</button>
   </div>
+  <div class="orion-customize-row"><button type="button" onclick="orionToggleCustomize()" style="width:100%;text-align:left;padding:10px 12px;border:1px solid var(--border-light,#e4e4e7);border-radius:10px;background:transparent;color:inherit;font:inherit;cursor:pointer">Customize appearance →</button></div>
 
   <div class="orion-customize-row" style="flex-direction:column; align-items:stretch;">
     <div>
@@ -21846,12 +21837,6 @@ function closeExtensionModal() {
       out.push('## ' + (m.role === 'user' ? 'You' : m.role === 'assistant' ? 'Assistant' : m.role), '', msgText(m), '');
     });
     return out.join('\n');
-  }
-  function currentChatRecord() {
-    persistCurrent();
-    var id = currentId();
-    var c = chats().filter(function (x) { return x.id === id; })[0];
-    return c || { id: id || uid(), label: 'Current chat', history: currentHistory(), createdAt: Date.now() };
   }
   function exportChats(list, format) {
     if (!list.length) return toast('Nothing to export');
@@ -22753,7 +22738,6 @@ function agSpeakLine(key, text) {
     fallback();
   });
 }
-function agSpeakFallback(text) { agSpeakLine('nebula', text); }
 window.agSpeakLine = agSpeakLine; if (typeof agStopSpeech === 'function') window.agStopSpeech = agStopSpeech;
 
 // ── entry points ──
@@ -28227,7 +28211,6 @@ document.getElementById('termInput')?.addEventListener('keydown', (e) => {
     add(items, 'saved', 'Saved', go('saved'));
     add(items, 'lists', 'Lists', () => lyraSetView('lists'));
     add(items, 'history', 'History', () => lyraSetView('history'));
-    add(items, 'community', 'Community', () => { closeLyra(); setTimeout(() => { try { railToggleProgram('community'); } catch (e) {} }, 60); });
     add(foot, 'settings', 'Settings', go('settings'), true);
     add(foot, 'back', 'Back to Cosmic', closeLyra, true);
     add(foot, 'sun', 'Light / dark', () => { try { toggleDarkModeNav(); } catch (e) {} }, true);
@@ -30310,7 +30293,6 @@ document.getElementById('termInput')?.addEventListener('keydown', (e) => {
   add('body[data-corners=sharp] ' + R + '{border-radius:4px!important}');
   add('body[data-corners=round] .orion-input-box{border-radius:28px!important}body[data-corners=round] ' + R.replace('.orion-input-box,', '') + '{border-radius:9999px!important}');
   add('#agxThinkPill{display:none}body[data-thinkbtn=on] #agxThinkPill{display:inline-flex}');
-  add('#agxPodPill{display:inline-flex}body[data-podbtn=off] #agxPodPill{display:none!important}@container agxbar (max-width:700px){#agxPodPill span{display:none}#agxPodPill{padding-left:9px!important;padding-right:9px!important}}');
   add('#agxThinkPill.on{background:rgba(77,107,254,.15)!important;border-color:#4d6bfe!important;color:#7d95ff!important}' + Lt + ' #agxThinkPill.on{background:#dbeafe!important;color:#4d6bfe!important}');
   add('#agxGreeting{display:none;font-size:30px;font-weight:600;letter-spacing:-.01em;margin:0 0 18px;text-align:center}');
   add('body[data-greet]:not([data-greet=default]) #agxGreeting{display:block}body[data-greet]:not([data-greet=default]) #orionBrandLogo,body[data-greet]:not([data-greet=default]) #orionWelcomeTagline{display:none!important}');
@@ -30335,7 +30317,7 @@ document.getElementById('termInput')?.addEventListener('keydown', (e) => {
       });
     }
     fixVoice(); setInterval(fixVoice, 1500);
-    var DS = ['cw', 'font', 'fs', 'ms', 'bg', 'wrap', 'cfs', 'motion', 'contrast', 'look', 'header', 'acts', 'tokens', 'modelname', 'chips', 'corners', 'thinkbtn', 'podbtn', 'greet', 'center', 'bgmove', 'bgviz'];
+    var DS = ['cw', 'font', 'fs', 'ms', 'bg', 'wrap', 'cfs', 'motion', 'contrast', 'look', 'header', 'acts', 'tokens', 'modelname', 'chips', 'corners', 'thinkbtn', 'greet', 'center', 'bgmove', 'bgviz'];
     var LAYOUTS = ['gpt', 'grok', 'claude', 'zai'];
     var PH = { gpt: 'Ask anything', grok: 'Type / to use slash commands', claude: 'How can I help you today?', zai: 'How can I help you today?' };
     var origPH = inp.placeholder;
@@ -30385,18 +30367,6 @@ document.getElementById('termInput')?.addEventListener('keydown', (e) => {
       tp.innerHTML = '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.3 1 2.1V18h6v-1.2c0-.8.4-1.6 1-2.1A7 7 0 0 0 12 2z"/></svg><span>Think</span>';
       tp.onclick = function () { cfg.think = cfg.think === 'on' ? 'off' : 'on'; tp.classList.toggle('on', cfg.think === 'on'); AGX.save(); };
       tp.classList.toggle('on', cfg.think === 'on'); search.after(tp);
-    }
-    if (search && !document.getElementById('agxPodPill')) {
-      // Podcast button: type a topic (or leave empty) and tap it. Two constellations talk about it.
-      var pp = document.createElement('button'); pp.type = 'button'; pp.id = 'agxPodPill'; pp.className = 'orion-search-pill'; pp.title = 'Start a podcast: type a topic, then tap. Leave it empty and the hosts pick one';
-      pp.innerHTML = '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v4M8 22h8"/></svg><span>Podcast</span>';
-      pp.onclick = function () {
-        var inp = document.getElementById('orion-input'); if (!inp) return;
-        var t = inp.value.trim().replace(/^(?:a\s+)?podcast\s+(?:about|on)\s+/i, '');
-        inp.value = 'start a podcast' + (t ? ' about ' + t : '');
-        try { orionSend(); } catch (e) {}
-      };
-      (document.getElementById('agxThinkPill') || search).after(pp);
     }
     var welcome = document.getElementById('orionWelcome');
     gh = document.createElement('h1'); gh.id = 'agxGreeting'; if (welcome) welcome.prepend(gh);
@@ -30637,7 +30607,6 @@ document.getElementById('termInput')?.addEventListener('keydown', (e) => {
       row('Starter chips', 'Suggestion chips under the greeting', 'chips', [['default', 'Show'], ['off', 'Hide']]),
       sec('Chat bar · from DeepSeek & ChatGPT'),
       row('Think button', 'Adds a Think toggle next to Search', 'thinkbtn', [['default', 'Hide'], ['on', 'Show']]),
-      row('Podcast button', 'Podcast button next to Search. Type a topic, tap it, and two constellations talk about it', 'podbtn', [['default', 'Show'], ['off', 'Hide']]),
       row('Token count', 'Show the token meter in the chat bar', 'tokens', [['default', 'Show'], ['off', 'Hide']]),
       row('Model name', 'Show the model name in the chat bar', 'modelname', [['default', 'Show'], ['off', 'Hide']]),
       sec('Messages & shape · from Claude & Z.ai'),
@@ -38412,7 +38381,6 @@ document.addEventListener('keydown', (e) => {
   }, true);
 
   function col(P, i, a) { return 'rgba(' + P[((i % P.length) + P.length) % P.length] + ',' + a.toFixed(3) + ')'; }
-  function grad(P, x0, y0, x1, y1, a) { var g = cx.createLinearGradient(x0, y0, x1, y1), n = P.length; for (var i = 0; i < n; i++) g.addColorStop(i / (n - 1), col(P, i, a)); return g; }
 
   // ── blob styles ──
   // Metaballs: every blob adds an "influence field"; where the fields add up past a
@@ -40104,27 +40072,15 @@ html body[data-brbar=solid] #browser-mode-panel :is(.ab-bar,.ab-tabs){background
   };
 
   // ── Panel ──
-  var panel = null, tab = 'prompts';
+  var panel = null, tab = 'know';
   function closePanel() { if (panel) { panel.remove(); panel = null; } }
   function togglePanel() { if (panel) return closePanel(); panel = document.createElement('div'); panel.className = 'ag-lib'; document.body.appendChild(panel); render(); }
   function render() {
     if (!panel) return;
-    panel.innerHTML = '<div class="ag-lib-h"><button data-t="prompts" class="' + (tab === 'prompts' ? 'on' : '') + '">Prompts</button><button data-t="know" class="' + (tab === 'know' ? 'on' : '') + '">Knowledge</button><span style="flex:1"></span><button data-x>✕</button></div><div class="ag-lib-b"></div>';
+    panel.innerHTML = '<div class="ag-lib-h"><button data-t="know" class="' + (tab === 'know' ? 'on' : '') + '">Knowledge</button><span style="flex:1"></span><button data-x>✕</button></div><div class="ag-lib-b"></div>';
     panel.querySelectorAll('[data-t]').forEach(function (b) { b.onclick = function () { tab = b.dataset.t; render(); }; });
     panel.querySelector('[data-x]').onclick = closePanel;
-    (tab === 'prompts' ? renderPrompts : renderKnow)(panel.querySelector('.ag-lib-b'));
-  }
-  function renderPrompts(box) {
-    var list = LS.get(K_PROMPTS, []), inp = document.getElementById('orion-input');
-    box.innerHTML = (list.length ? list.map(function (p, i) { return '<div class="ag-row"><button class="grow" data-use="' + i + '" title="' + esc(p.x.slice(0, 200)) + '">' + esc(p.t) + '</button><button data-del="' + i + '">✕</button></div>'; }).join('') : '<div class="ag-dim">No saved prompts yet. Save one below, then click it to put it in the message box.</div>') +
-      '<input type="text" placeholder="Title" data-title><textarea rows="4" placeholder="Prompt text" data-text>' + esc(inp ? inp.value : '') + '</textarea><button data-save>Save prompt</button>';
-    box.querySelectorAll('[data-use]').forEach(function (b) { b.onclick = function () { if (inp) { inp.value = list[b.dataset.use].x; try { orionAutoResize(inp); } catch (e) {} inp.focus(); } closePanel(); }; });
-    box.querySelectorAll('[data-del]').forEach(function (b) { b.onclick = function () { list.splice(+b.dataset.del, 1); LS.set(K_PROMPTS, list); render(); }; });
-    box.querySelector('[data-save]').onclick = function () {
-      var t = box.querySelector('[data-title]').value.trim(), x = box.querySelector('[data-text]').value.trim();
-      if (!x) return note('Write the prompt text first');
-      list.unshift({ t: t || x.slice(0, 30), x: x }); LS.set(K_PROMPTS, list); render();
-    };
+    renderKnow(panel.querySelector('.ag-lib-b'));
   }
   function renderKnow(box) {
     var all = LS.get(K_STACKS, {}), names = Object.keys(all), act = LS.get(K_ACTIVE, '');
@@ -40172,17 +40128,423 @@ html body[data-brbar=solid] #browser-mode-panel :is(.ab-bar,.ab-tabs){background
     } catch (e) {}
   };
 
-  // ── Button next to the web-search pill ──
-  function mount() {
-    if (document.getElementById('agLibBtn')) return;
-    var ref = document.getElementById('orionWebSearchToggle'); if (!ref || !ref.parentNode) return;
-    var b = document.createElement('button'); b.type = 'button'; b.id = 'agLibBtn'; b.className = 'orion-add-btn'; b.title = 'Prompts and knowledge';
-    b.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="15" height="15"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V3H6.5A2.5 2.5 0 0 0 4 5.5z"/></svg>';
-    b.onclick = togglePanel; ref.parentNode.insertBefore(b, ref.nextSibling);
-  }
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', mount); else mount();
-  setTimeout(mount, 1500);
 })();
+</script>
+<script>
+
+// ── COSMIC MONEY ──
+// Non-custodial, Ethereum-based wallet (like X Money, but on-chain). Dollars first:
+// balances show in USD, and the wallet holds USDC / DAI stablecoins alongside ETH
+// (which pays gas). Keys never leave this device: the secret is encrypted with
+// your password (PBKDF2 + AES-GCM) in localStorage, and signing happens locally.
+const MONEY_LOGO = '<defs><mask id="cmmM" maskUnits="userSpaceOnUse" x="0" y="0" width="48" height="48"><rect width="48" height="48" fill="#fff"/><g fill="#000" stroke="#000" stroke-width="5" stroke-linejoin="round"><path d="M24 6.5L33.5 23.5 24 29 14.5 23.5z"/><path d="M14.5 27.5L24 33 33.5 27.5 24 43z"/></g></mask></defs> <g mask="url(#cmmM)"><ellipse cx="24" cy="25" rx="22" ry="8" transform="rotate(-24 24 25)" stroke="currentColor" stroke-width="2.2" fill="none"/></g> <g fill="currentColor"><path d="M24 6.5L33.5 23.5 24 29 14.5 23.5z"/><path d="M14.5 27.5L24 33 33.5 27.5 24 43z"/></g> <path d="M40 3l1.3 4.2 4.2 1.3-4.2 1.3L40 14l-1.3-4.2-4.2-1.3 4.2-1.3z" fill="currentColor"/> <circle cx="6.5" cy="41" r="1.5" fill="currentColor"/><circle cx="9" cy="8" r="1" fill="currentColor"/><circle cx="42.5" cy="39" r="1" fill="currentColor"/>';
+const MONEY_KEY = 'cosmic_money_v1';
+const MONEY_NETS = {
+  mainnet: { label: 'MAINNET', rpc: 'https://ethereum-rpc.publicnode.com', chainId: 1, scan: 'https://etherscan.io',
+    tokens: [ { sym: 'USDC', addr: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48', dec: 6 }, { sym: 'DAI', addr: '0x6b175474e89094c44da98b954eedeac495271d0f', dec: 18 } ] },
+  sepolia: { label: 'TESTNET', rpc: 'https://ethereum-sepolia-rpc.publicnode.com', chainId: 11155111, scan: 'https://sepolia.etherscan.io',
+    tokens: [ { sym: 'USDC', addr: '0x1c7d4b196cb0c7b01d743fbc6116a902379c7238', dec: 6 } ] }
+};
+const LIDO = '0xae7ab96520de3a18e5e111b5eaab095312d7fe84'; // Lido stETH: sending ETH stakes it and mints stETH
+const MONEY_ABI = ['function balanceOf(address) view returns (uint256)', 'function transfer(address,uint256) returns (bool)'];
+const money = { s: null, wallet: null, provider: null, eth: null, bal: {}, steth: '0', apr: null, price: 0, tab: 'wallet', view: null, err: '', lockT: null, draft: null, qr: null };
+
+function moneyLoad() {
+  try { money.s = JSON.parse(localStorage.getItem(MONEY_KEY)) || null; } catch (e) { money.s = null; }
+  if (!money.s) money.s = { vault: null, address: '', net: 'mainnet', txs: [], contacts: [] };
+}
+function moneySave() { try { localStorage.setItem(MONEY_KEY, JSON.stringify(money.s)); } catch (e) {} }
+function mnEl(tag, cls, text) { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
+function mnBtn(text, fn, cls) { const b = mnEl('button', 'mn-btn' + (cls ? ' ' + cls : ''), text); b.onclick = fn; return b; }
+function mnIn(ph, type, val) { const i = mnEl('input', 'mn-in'); i.placeholder = ph; i.type = type || 'text'; i.autocomplete = 'off'; i.spellcheck = false; if (val) i.value = val; return i; }
+function mnShort(a) { return a ? a.slice(0, 6) + '…' + a.slice(-4) : ''; }
+function mnUsd(n) { return '$' + (n || 0).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); }
+
+// ── crypto vault ──
+const mnB64 = { enc: b => btoa(String.fromCharCode(...new Uint8Array(b))), dec: s => Uint8Array.from(atob(s), c => c.charCodeAt(0)) };
+async function mnKey(pw, salt) {
+  const km = await crypto.subtle.importKey('raw', new TextEncoder().encode(pw), 'PBKDF2', false, ['deriveKey']);
+  return crypto.subtle.deriveKey({ name: 'PBKDF2', salt, iterations: 250000, hash: 'SHA-256' }, km, { name: 'AES-GCM', length: 256 }, false, ['encrypt', 'decrypt']);
+}
+async function mnSeal(secret, pw) {
+  const salt = crypto.getRandomValues(new Uint8Array(16)), iv = crypto.getRandomValues(new Uint8Array(12));
+  const ct = await crypto.subtle.encrypt({ name: 'AES-GCM', iv }, await mnKey(pw, salt), new TextEncoder().encode(secret));
+  return { salt: mnB64.enc(salt), iv: mnB64.enc(iv), ct: mnB64.enc(ct) };
+}
+async function mnOpen(v, pw) {
+  const pt = await crypto.subtle.decrypt({ name: 'AES-GCM', iv: mnB64.dec(v.iv) }, await mnKey(pw, mnB64.dec(v.salt)), mnB64.dec(v.ct));
+  return new TextDecoder().decode(pt);
+}
+function mnLoadScript(src, test) {
+  return new Promise((res, rej) => {
+    if (test()) return res();
+    const s = document.createElement('script'); s.src = src; s.onload = () => res(); s.onerror = () => rej(new Error('Could not load ' + src.split('/')[4] + ' — check your connection'));
+    document.head.appendChild(s);
+  });
+}
+const mnEthers = () => mnLoadScript('https://cdn.jsdelivr.net/npm/ethers@6.13.4/dist/ethers.umd.min.js', () => window.ethers);
+
+// ── chain ──
+function mnNet() { return MONEY_NETS[money.s.net] || MONEY_NETS.mainnet; }
+function mnProvider() {
+  if (!money.provider || money.provider._mnNet !== money.s.net) {
+    money.provider = new ethers.JsonRpcProvider(mnNet().rpc, mnNet().chainId, { staticNetwork: true });
+    money.provider._mnNet = money.s.net;
+  }
+  return money.provider;
+}
+async function moneyRefresh() {
+  if (!money.s.address || !window.ethers) return;
+  try {
+    const p = mnProvider(), a = money.s.address;
+    money.eth = ethers.formatEther(await p.getBalance(a));
+    const out = {};
+    await Promise.all(mnNet().tokens.map(async t => {
+      try { out[t.sym] = ethers.formatUnits(await new ethers.Contract(t.addr, MONEY_ABI, p).balanceOf(a), t.dec); } catch (e) { out[t.sym] = '0'; }
+    }));
+    money.bal = out;
+    if (money.s.net === 'mainnet') {
+      try { money.steth = ethers.formatEther(await new ethers.Contract(LIDO, MONEY_ABI, p).balanceOf(a)); } catch (e) {}
+      if (money.apr == null) { try { const r = await fetch('https://eth-api.lido.fi/v1/protocol/steth/apr/sma'); money.apr = (await r.json()).data.smaApr; } catch (e) {} }
+    } else money.steth = '0';
+    if (money.s.net === 'mainnet') {
+      try { const r = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd'); money.price = (await r.json()).ethereum.usd || money.price; } catch (e) {}
+    } else money.price = 0;
+    money.err = '';
+  } catch (e) { money.err = 'Network unreachable — balances may be out of date.'; }
+  if (moneyPanelOpen() && money.wallet && !money.view) moneyRender();
+}
+function mnTotalUsd() {
+  let t = (parseFloat(money.eth) || 0) * (money.price || 0);
+  Object.values(money.bal).forEach(v => t += parseFloat(v) || 0);   // stablecoins ≈ $1
+  t += (parseFloat(money.steth) || 0) * (money.price || 0);        // stETH ≈ 1 ETH
+  return t;
+}
+
+// ── lifecycle ──
+function moneyPanelOpen() { return !!document.getElementById('money-mode-panel')?.classList.contains('rail-open'); }
+function moneyOnOpen() { if (!money.s) moneyLoad(); money.view = null; moneyRender(); mnEthers().then(() => { if (money.wallet) moneyRefresh(); }).catch(e => { money.err = e.message; moneyRender(); }); }
+function moneyLock() { money.wallet = null; money.view = null; clearTimeout(money.lockT); moneyRender(); }
+function moneyBump() { clearTimeout(money.lockT); money.lockT = setTimeout(() => { if (money.wallet) moneyLock(); }, 10 * 60 * 1000); }
+async function moneyUnlock(pw) {
+  await mnEthers();
+  const secret = await mnOpen(money.s.vault, pw);
+  money.wallet = secret.includes(' ') ? ethers.Wallet.fromPhrase(secret) : new ethers.Wallet(secret);
+  moneyBump(); moneyRefresh();
+}
+
+// ── render ──
+function moneyRender() {
+  if (!money.s) moneyLoad();
+  const root = document.getElementById('mnRoot'); if (!root) return;
+  root.textContent = '';
+  const head = mnEl('div', 'mn-head'), t = mnEl('b'); t.insertAdjacentHTML('beforeend', '<svg viewBox="0 0 48 48" fill="none" width="30" height="30" aria-hidden="true">'+MONEY_LOGO+'</svg>'); t.append('Cosmic Money');
+  const sub = mnEl('small', null, 'Dollars on Ethereum · you hold the keys');
+  const l = mnEl('div'); l.append(t, sub); head.append(l);
+  if (money.s.vault) { const nb = mnEl('button', 'mn-net', mnNet().label); nb.title = 'Switch network'; nb.onclick = () => { money.s.net = money.s.net === 'mainnet' ? 'sepolia' : 'mainnet'; money.eth = null; money.bal = {}; moneySave(); moneyRender(); moneyRefresh(); }; head.append(nb); }
+  root.append(head);
+  if (money.err) root.append(mnEl('div', 'mn-err', money.err));
+  if (!money.s.vault) return moneyViewSetup(root);
+  if (!money.wallet) return moneyViewLocked(root);
+  moneyBump();
+  if (money.view === 'confirm') return moneyViewConfirm(root);
+  moneyViewMain(root);
+}
+
+function moneyViewSetup(root) {
+  const c = mnEl('div', 'mn-card');
+  c.append(mnEl('div', 'mn-lab', 'GET STARTED'), mnEl('p', 'mn-note', 'Create a new wallet or import one. Your keys are encrypted with a password and stay on this device — nobody, including Cosmic, can recover them for you.'));
+  const pw = mnIn('Choose a password (8+ characters)', 'password');
+  const imp = mnIn('Or paste a recovery phrase / private key to import', 'password');
+  const err = mnEl('div', 'mn-err');
+  const go = async (create) => {
+    err.textContent = '';
+    if (pw.value.length < 8) { err.textContent = 'Password needs at least 8 characters.'; return; }
+    try {
+      await mnEthers();
+      let w, secret;
+      if (create) { w = ethers.Wallet.createRandom(); secret = w.mnemonic.phrase; }
+      else {
+        secret = imp.value.trim(); if (!secret) { err.textContent = 'Paste a recovery phrase or private key first.'; return; }
+        w = secret.includes(' ') ? ethers.Wallet.fromPhrase(secret) : new ethers.Wallet(secret.startsWith('0x') ? secret : '0x' + secret);
+      }
+      money.s.vault = await mnSeal(secret, pw.value); money.s.address = w.address; moneySave();
+      money.wallet = w; money.view = create ? 'backup' : null; money.draft = create ? secret : null;
+      moneyRender(); moneyRefresh();
+    } catch (e) { err.textContent = 'That didn’t work: ' + (e.shortMessage || e.message); }
+  };
+  const r = mnEl('div', 'mn-row'); r.append(mnBtn('Create wallet', () => go(true)), mnBtn('Import', () => go(false), 'ghost'));
+  c.append(pw, imp, err, r); root.append(c);
+}
+
+function moneyViewLocked(root) {
+  const c = mnEl('div', 'mn-card');
+  c.append(mnEl('div', 'mn-lab', 'LOCKED'), mnEl('div', 'mn-addr', money.s.address));
+  const pw = mnIn('Password', 'password'), err = mnEl('div', 'mn-err');
+  const go = async () => { err.textContent = ''; try { await moneyUnlock(pw.value); moneyRender(); } catch (e) { err.textContent = e.name === 'OperationError' ? 'Wrong password.' : e.message; } };
+  pw.onkeydown = e => { if (e.key === 'Enter') go(); };
+  c.append(pw, err, mnBtn('Unlock', go)); root.append(c);
+  setTimeout(() => pw.focus(), 50);
+}
+
+function moneyViewBackup(root) {
+  const c = mnEl('div', 'mn-card');
+  c.append(mnEl('div', 'mn-lab', 'BACK UP YOUR RECOVERY PHRASE'), mnEl('p', 'mn-note', 'Write these 12 words down, in order, somewhere offline. They are the only way to restore this wallet. Anyone who has them can take your money.'));
+  const g = mnEl('div', 'mn-seed'); money.draft.split(' ').forEach((w, i) => g.append(mnEl('span', null, (i + 1) + '. ' + w)));
+  c.append(g, mnBtn('I’ve saved it', () => { money.draft = null; money.view = null; moneyRender(); }));
+  root.append(c);
+}
+
+function moneyViewMain(root) {
+  if (money.view === 'backup') return moneyViewBackup(root);
+  const c = mnEl('div', 'mn-card');
+  c.append(mnEl('div', 'mn-lab', money.s.net === 'mainnet' ? 'TOTAL BALANCE' : 'TEST BALANCE (NO REAL VALUE)'));
+  const stable = Object.values(money.bal).reduce((a, v) => a + (parseFloat(v) || 0), 0);
+  const big = mnEl('div', 'mn-bal', money.s.net === 'mainnet' ? mnUsd(mnTotalUsd()) : (money.eth == null ? '…' : (+money.eth).toFixed(4) + ' ETH'));
+  c.append(big);
+  const parts = [];
+  Object.entries(money.bal).forEach(([k, v]) => { if (parseFloat(v) > 0) parts.push((+v).toLocaleString('en-US', { maximumFractionDigits: 2 }) + ' ' + k); });
+  if (parseFloat(money.steth) > 0) parts.push((+money.steth).toFixed(4) + ' stETH');
+  parts.push(money.eth == null ? '… ETH' : (+money.eth).toFixed(4) + ' ETH' + (money.price ? ' (' + mnUsd(money.eth * money.price) + ')' : ''));
+  c.append(mnEl('div', 'mn-usd', parts.join(' · ')));
+  const a = mnEl('div', 'mn-addr', money.s.address); a.title = 'Click to copy'; a.onclick = () => { navigator.clipboard?.writeText(money.s.address); a.textContent = 'Copied'; setTimeout(() => a.textContent = money.s.address, 900); };
+  c.append(a); root.append(c);
+
+  const tabs = mnEl('div', 'mn-tabs');
+  [['wallet', 'Send'], ['receive', 'Receive'], ['stake', 'Stake'], ['activity', 'Activity']].forEach(([k, n]) => { const b = mnEl('button', 'mn-tab' + (money.tab === k ? ' on' : ''), n); b.onclick = () => { money.tab = k; moneyRender(); }; tabs.append(b); });
+  root.append(tabs);
+  const body = mnEl('div', 'mn-card');
+  if (money.tab === 'wallet') moneyTabSend(body); else if (money.tab === 'receive') moneyTabReceive(body); else if (money.tab === 'stake') moneyTabStake(body); else moneyTabActivity(body);
+  root.append(body);
+  const f = mnEl('div', 'mn-row'); f.append(mnBtn('Refresh', moneyRefresh, 'ghost'), mnBtn('Lock', moneyLock, 'ghost'), mnBtn('Export key', moneyExport, 'ghost')); root.append(f);
+  root.append(mnEl('p', 'mn-note', 'Stablecoins (USDC, DAI) hold their dollar value. You need a little ETH in the wallet to pay network fees.'));
+}
+
+async function moneyExport() {
+  const pw = prompt('Enter your password to show your recovery phrase / key:'); if (!pw) return;
+  try { const s = await mnOpen(money.s.vault, pw); money.draft = s; money.view = 'backup'; moneyRender(); } catch (e) { alert('Wrong password.'); }
+}
+
+function moneyTabSend(body) {
+  const toks = ['ETH'].concat(mnNet().tokens.map(t => t.sym));
+  let asset = money.sendAsset && toks.includes(money.sendAsset) ? money.sendAsset : (mnNet().tokens[0]?.sym || 'ETH');
+  const chips = mnEl('div', 'mn-chips');
+  toks.forEach(k => { const c = mnEl('button', 'mn-chip', k); if (k === asset) { c.style.background = 'var(--mn-ink)'; c.style.color = 'var(--mn-bg)'; } c.onclick = () => { money.sendAsset = k; moneyRender(); }; chips.append(c); });
+  const to = mnIn('To: address, ENS name, or @contact', 'text', money.sendTo || '');
+  const amt = mnIn('Amount in ' + asset, 'text', money.sendAmt || '');
+  amt.inputMode = 'decimal';
+  to.oninput = () => money.sendTo = to.value; amt.oninput = () => money.sendAmt = amt.value;
+  const err = mnEl('div', 'mn-err');
+  body.append(mnEl('div', 'mn-lab', 'SEND'), chips, to);
+  if (money.s.contacts.length) { const cc = mnEl('div', 'mn-chips'); money.s.contacts.forEach(c => { const b = mnEl('button', 'mn-chip', '@' + c.name); b.onclick = () => { money.sendTo = '@' + c.name; moneyRender(); }; cc.append(b); }); body.append(cc); }
+  body.append(amt, err, mnBtn('Review', async () => {
+    err.textContent = '';
+    try { await moneyPrepare(asset, to.value.trim(), amt.value.trim()); money.view = 'confirm'; moneyRender(); } catch (e) { err.textContent = e.shortMessage || e.message; }
+  }));
+}
+
+async function moneyPrepare(asset, toRaw, amtRaw) {
+  await mnEthers(); const p = mnProvider();
+  if (!toRaw) throw new Error('Enter who to send to.');
+  let to = toRaw, label = '';
+  if (toRaw.startsWith('@')) { const c = money.s.contacts.find(x => x.name.toLowerCase() === toRaw.slice(1).toLowerCase()); if (!c) throw new Error('No contact named ' + toRaw); to = c.addr; label = toRaw; }
+  else if (toRaw.includes('.') && !toRaw.startsWith('0x')) { if (money.s.net !== 'mainnet') throw new Error('ENS names only work on mainnet.'); const r = await p.resolveName(toRaw); if (!r) throw new Error('Could not resolve ' + toRaw); to = r; label = toRaw; }
+  if (!ethers.isAddress(to)) throw new Error('That isn’t a valid Ethereum address.');
+  to = ethers.getAddress(to);
+  const amount = parseFloat(amtRaw); if (!(amount > 0)) throw new Error('Enter an amount greater than zero.');
+  const tok = mnNet().tokens.find(t => t.sym === asset);
+  const value = tok ? ethers.parseUnits(amtRaw, tok.dec) : ethers.parseEther(amtRaw);
+  const have = tok ? ethers.parseUnits(money.bal[asset] || '0', tok.dec) : ethers.parseEther(money.eth || '0');
+  if (value > have) throw new Error('Not enough ' + asset + ' in this wallet.');
+  const fee = await p.getFeeData();
+  const gas = to.toLowerCase() === LIDO ? 130000n : tok ? await new ethers.Contract(tok.addr, MONEY_ABI, p).transfer.estimateGas(to, value, { from: money.s.address }).catch(() => 70000n) : 21000n;
+  const gasCost = gas * (fee.maxFeePerGas || fee.gasPrice || 0n);
+  const ethHave = ethers.parseEther(money.eth || '0');
+  if (!tok && value + gasCost > ethHave) throw new Error('Not enough ETH to cover the amount plus the network fee.');
+  if (tok && gasCost > ethHave) throw new Error('You need a little ETH in this wallet to pay the network fee.');
+  money.draft = { asset, to, label, value, tok, amtRaw, gas, gasCost };
+}
+
+function moneyViewConfirm(root) {
+  const d = money.draft, c = mnEl('div', 'mn-card');
+  c.append(mnEl('div', 'mn-lab', 'CONFIRM'));
+  const s = mnEl('div', 'mn-sum');
+  const row = (a, b) => { const r = mnEl('div'); r.append(mnEl('span', null, a), mnEl('span', null, b)); s.append(r); };
+  row(d.kind === 'stake' ? 'Stake' : 'Send', d.amtRaw + ' ' + d.asset + (d.asset !== 'ETH' && money.s.net === 'mainnet' ? ' (' + mnUsd(parseFloat(d.amtRaw)) + ')' : (money.price && money.s.net === 'mainnet' ? ' (' + mnUsd(parseFloat(d.amtRaw) * money.price) + ')' : '')));
+  row(d.kind === 'stake' ? 'Via' : 'To', (d.label ? d.label + ' · ' : '') + mnShort(d.to));
+  if (d.kind === 'stake') row('You receive', '≈ ' + d.amtRaw + ' stETH');
+  row('Network fee', '~' + (+ethers.formatEther(d.gasCost)).toFixed(5) + ' ETH' + (money.price ? ' (' + mnUsd(+ethers.formatEther(d.gasCost) * money.price) + ')' : ''));
+  row('Network', mnNet().label === 'MAINNET' ? 'Ethereum' : 'Sepolia testnet');
+  c.append(s, mnEl('p', 'mn-note', 'Blockchain transfers can’t be reversed. Double-check the address.'));
+  const err = mnEl('div', 'mn-err');
+  const r = mnEl('div', 'mn-row');
+  const send = mnBtn('Send', async () => {
+    send.disabled = true; send.textContent = 'Sending…'; err.textContent = '';
+    try {
+      const w = money.wallet.connect(mnProvider());
+      const tx = d.tok ? await new ethers.Contract(d.tok.addr, MONEY_ABI, w).transfer(d.to, d.value) : await w.sendTransaction({ to: d.to, value: d.value });
+      money.s.txs.unshift({ hash: tx.hash, asset: d.asset, amt: d.amtRaw, to: d.to, label: d.label, t: Date.now(), net: money.s.net, status: 'pending', kind: d.kind });
+      if (!d.label && !money.s.contacts.some(x => x.addr === d.to)) { const nm = prompt('Save this address as a contact? Enter a name (or cancel):'); if (nm && /^[\w-]{1,20}$/.test(nm)) money.s.contacts.push({ name: nm, addr: d.to }); }
+      moneySave(); money.view = null; money.draft = null; money.sendAmt = ''; money.sendTo = ''; money.tab = 'activity'; moneyRender();
+      if (typeof lyraNotify === 'function') try { lyraNotify('Cosmic Money', 'Sent ' + d.amtRaw + ' ' + d.asset + ' to ' + mnShort(d.to)); } catch (e) {}
+      tx.wait().then(rc => { const m = money.s.txs.find(x => x.hash === tx.hash); if (m) m.status = rc && rc.status === 1 ? 'confirmed' : 'failed'; moneySave(); moneyRefresh(); if (moneyPanelOpen()) moneyRender(); }).catch(() => {});
+    } catch (e) { send.disabled = false; send.textContent = 'Send'; err.textContent = e.shortMessage || e.message; }
+  });
+  r.append(mnBtn('Back', () => { money.view = null; moneyRender(); }, 'ghost'), send);
+  c.append(err, r); root.append(c);
+}
+
+function moneyTabStake(body) {
+  body.append(mnEl('div', 'mn-lab', 'STAKE ETH'));
+  if (money.s.net !== 'mainnet') { body.append(mnEl('p', 'mn-note', 'Staking runs on Ethereum mainnet. Switch the network (top right) to MAINNET to use it. Try small amounts first.')); return; }
+  body.append(mnEl('p', 'mn-note', 'Stake ETH with Lido and get stETH. It earns staking rewards automatically and stays liquid, so your balance grows over time.'));
+  const st = mnEl('div', 'mn-sum');
+  const row = (a, b) => { const r = mnEl('div'); r.append(mnEl('span', null, a), mnEl('span', null, b)); st.append(r); };
+  row('Current rate (APR)', money.apr != null ? (+money.apr).toFixed(2) + '%' : '—');
+  row('Your stETH', (+money.steth).toFixed(4) + (money.price ? ' (' + mnUsd(money.steth * money.price) + ')' : ''));
+  body.append(st);
+  const amt = mnIn('Amount of ETH to stake', 'text', money.stakeAmt || ''); amt.inputMode = 'decimal'; amt.style.marginTop = '14px';
+  amt.oninput = () => money.stakeAmt = amt.value;
+  const err = mnEl('div', 'mn-err');
+  const srow = mnEl('div', 'mn-row');
+  body.append(amt, err, srow);
+  srow.append(mnBtn('Review stake', async () => {
+    err.textContent = '';
+    try { await moneyPrepare('ETH', ethers.getAddress(LIDO), amt.value.trim()); money.draft.kind = 'stake'; money.draft.label = 'Lido'; money.view = 'confirm'; moneyRender(); } catch (e) { err.textContent = e.shortMessage || e.message; }
+  }));
+  srow.append(mnBtn('Unstake on Lido ↗', () => window.open('https://stake.lido.fi/withdrawals', '_blank', 'noopener'), 'ghost'));
+  body.append(mnEl('p', 'mn-note', 'Staking has risk: stETH can trade slightly off 1 ETH, and unstaking can take days. Keep some ETH for network fees.'));
+}
+
+function moneyTabReceive(body) {
+  body.append(mnEl('div', 'mn-lab', 'RECEIVE'), mnEl('p', 'mn-note', 'Share this address to get paid in ETH, USDC or DAI. Only send assets on ' + (money.s.net === 'mainnet' ? 'Ethereum mainnet' : 'the Sepolia testnet') + ' to it.'));
+  const q = mnEl('div', 'mn-qr'); body.append(q);
+  mnLoadScript('https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.js', () => window.qrcode).then(() => {
+    const qr = qrcode(0, 'M'); qr.addData(money.s.address); qr.make(); q.innerHTML = qr.createSvgTag({ cellSize: 4, margin: 0, scalable: true });
+  }).catch(() => q.remove());
+  const a = mnEl('div', 'mn-addr', money.s.address); a.style.textAlign = 'center';
+  body.append(a, mnBtn('Copy address', e => { navigator.clipboard?.writeText(money.s.address); e.target.textContent = 'Copied'; setTimeout(() => e.target.textContent = 'Copy address', 900); }));
+}
+
+function moneyTabActivity(body) {
+  body.append(mnEl('div', 'mn-lab', 'ACTIVITY'));
+  const txs = money.s.txs.filter(t => t.net === money.s.net);
+  if (!txs.length) body.append(mnEl('p', 'mn-note', 'Nothing yet. Payments you send from Cosmic Money show up here.'));
+  txs.forEach(t => {
+    const r = mnEl('div', 'mn-tx'), l = mnEl('div'), rr = mnEl('div'); rr.style.textAlign = 'right';
+    l.append(mnEl('span', null, t.kind === 'stake' ? 'Staked with Lido' : 'Sent to ' + (t.label || mnShort(t.to))), mnEl('small', null, new Date(t.t).toLocaleString() + ' · ' + t.status));
+    rr.append(mnEl('span', null, '−' + t.amt + ' ' + t.asset));
+    const lk = mnEl('small', null, 'View ↗'); lk.style.cursor = 'pointer'; lk.onclick = () => window.open(MONEY_NETS[t.net].scan + '/tx/' + t.hash, '_blank', 'noopener');
+    rr.append(lk); r.append(l, rr); body.append(r);
+  });
+  const lk = mnBtn('Full history on Etherscan ↗', () => window.open(mnNet().scan + '/address/' + money.s.address, '_blank', 'noopener'), 'ghost'); lk.style.marginTop = '12px'; body.append(lk);
+}
+
+// /money slash command
+if (typeof SLASH_COMMANDS !== 'undefined') SLASH_COMMANDS['/money'] = { desc: 'money — open Cosmic Money, your Ethereum dollar wallet (USDC / DAI / ETH)', run: () => { if (!moneyPanelOpen()) railToggleProgram('money'); } };
+
+try { if (typeof SLASH_NAMES !== 'undefined' && !SLASH_NAMES.includes('/money')) SLASH_NAMES.push('/money'); if (typeof SLASH_CAT !== 'undefined') SLASH_CAT['/money'] = 'util'; } catch (e) {}
+RAIL_PROGRAMS.money = { el: () => document.getElementById('money-mode-panel'), btn: 'railMoneyBtn' };
+</script>
+<script>
+
+// ── ACCOUNT / SIGN IN ──
+// One card for sign in + sign up: "Continue with Google" or name + email. This is a
+// local account for now (stored on this device); real cross-device accounts would be
+// verified by agentic_server.py. Google needs a free OAuth client ID (Google Cloud →
+// Credentials → Web client) with this page's origin allowed — it won't work from file://.
+const ACCT_KEY = 'cosmic_account_v1', ACCT_GID = 'cosmic_google_client_id';
+function acctGet() { try { return JSON.parse(localStorage.getItem(ACCT_KEY)); } catch (e) { return null; } }
+function acctApply(a) {
+  try { localStorage.setItem(ACCT_KEY, JSON.stringify(a)); } catch (e) {}
+  try { if (typeof lyraState !== 'undefined' && lyraState.prefs && !lyraState.prefs.name && a.name) { lyraState.prefs.name = a.name; lyraSave(); if (typeof lyraBuild === 'function' && typeof lyraPanelOpen === 'function') {} } } catch (e) {}
+  document.getElementById('acctGate')?.remove();
+}
+function acctSignOut() { try { localStorage.removeItem(ACCT_KEY); } catch (e) {} acctShow(); }
+function acctJwt(t) { const p = t.split('.')[1].replace(/-/g, '+').replace(/_/g, '/'); return JSON.parse(decodeURIComponent(escape(atob(p)))); }
+function acctShow() {
+  document.getElementById('acctGate')?.remove();
+  const g = document.createElement('div'); g.id = 'acctGate';
+  const card = document.createElement('div'); card.className = 'ac-card';
+  const el = (t, c, x) => { const e = document.createElement(t); if (c) e.className = c; if (x != null) e.textContent = x; return e; };
+  card.append(el('div', 'ac-logo', 'Cosmic'), el('h2', null, 'Sign in or create your account'), el('p', 'ac-sub', 'One step — new here or coming back.'));
+  const gbox = el('div', 'ac-g'); card.append(gbox);
+  const err = el('div', 'ac-err');
+  const gid = (() => { try { return localStorage.getItem(ACCT_GID) || ''; } catch (e) { return ''; } })();
+  const setupG = (id) => {
+    gbox.textContent = '';
+    if (!id) { const b = el('button', 'ac-btn ghost', 'Continue with Google'); b.onclick = () => { err.textContent = 'Add your Google client ID below first.'; dev.open = true; }; gbox.append(b); return; }
+    const s = document.createElement('script'); s.src = 'https://accounts.google.com/gsi/client'; s.async = true;
+    s.onload = () => { try {
+      google.accounts.id.initialize({ client_id: id, callback: r => { try { const j = acctJwt(r.credential); acctApply({ provider: 'google', name: j.name || j.given_name || '', email: j.email || '', picture: j.picture || '', t: Date.now() }); } catch (e) { err.textContent = 'Google sign-in failed.'; } } });
+      google.accounts.id.renderButton(gbox, { theme: 'outline', size: 'large', shape: 'pill', text: 'continue_with', width: 300 });
+    } catch (e) { err.textContent = 'Google sign-in couldn’t start: ' + e.message; } };
+    s.onerror = () => { err.textContent = 'Couldn’t reach Google — check your connection.'; };
+    document.head.appendChild(s);
+  };
+  card.append(el('div', 'ac-or', 'or'));
+  const nm = el('input', 'ac-in'); nm.placeholder = 'Your name'; nm.autocomplete = 'name';
+  const em = el('input', 'ac-in'); em.placeholder = 'Email'; em.type = 'email'; em.autocomplete = 'email';
+  const go = el('button', 'ac-btn', 'Continue');
+  go.onclick = () => {
+    err.textContent = '';
+    if (!nm.value.trim()) { err.textContent = 'Enter your name.'; return; }
+    if (!/^\S+@\S+\.\S+$/.test(em.value.trim())) { err.textContent = 'Enter a valid email.'; return; }
+    acctApply({ provider: 'email', name: nm.value.trim(), email: em.value.trim(), t: Date.now() });
+  };
+  const skip = el('button', 'ac-skip', 'Skip for now'); skip.onclick = () => { try { sessionStorage.setItem('acctSkipped', '1'); } catch (e) {} g.remove(); };
+  const dev = document.createElement('details'); dev.className = 'ac-dev';
+  dev.append(el('summary', null, 'Google client ID'));
+  const gi = el('input', 'ac-in'); gi.placeholder = 'xxxx.apps.googleusercontent.com'; gi.value = gid;
+  const sv = el('button', 'ac-btn ghost', 'Save'); sv.onclick = () => { try { localStorage.setItem(ACCT_GID, gi.value.trim()); } catch (e) {} setupG(gi.value.trim()); err.textContent = ''; };
+  dev.append(el('p', 'ac-sub', 'Free from Google Cloud → Credentials → OAuth client (Web). Allow this page’s address as an origin; it won’t work from a file.'), gi, sv);
+  card.append(nm, em, err, go, skip, dev); g.append(card); document.body.append(g);
+  setupG(gid);
+}
+if (typeof SLASH_COMMANDS !== 'undefined') SLASH_COMMANDS['/account'] = { desc: 'account — sign in, sign up, or switch account', run: () => acctShow() };
+try { if (typeof SLASH_NAMES !== 'undefined' && !SLASH_NAMES.includes('/account')) SLASH_NAMES.push('/account'); if (typeof SLASH_CAT !== 'undefined') SLASH_CAT['/account'] = 'util'; } catch (e) {}
+if (!acctGet() && !sessionStorage.getItem('acctSkipped')) setTimeout(acctShow, 400);
+</script>
+<script>
+
+// ── LYRA TIPS ── tip a post's author in USDC through Cosmic Money
+function lyraOpenTip(p) {
+  document.getElementById('lyTipDlg')?.remove();
+  if (!money.s) moneyLoad();
+  const who = String(p.who || '').replace(/[^\w-]/g, '').slice(0, 20) || 'author';
+  const known = money.s.contacts.find(c => c.name.toLowerCase() === who.toLowerCase());
+  const ov = document.createElement('div'); ov.id = 'lyTipDlg';
+  const card = mnEl('div', 'tp-card'); ov.append(card);
+  card.append(mnEl('b', 'tp-h', 'Tip @' + who), mnEl('p', 'tp-s', 'Sent in USDC, straight from your wallet to theirs.'));
+  let amt = '5';
+  const chips = mnEl('div', 'tp-chips'), custom = mnIn('Custom amount ($)', 'text'); custom.inputMode = 'decimal';
+  const paint = () => [...chips.children].forEach(c => c.classList.toggle('on', c.dataset.v === amt));
+  ['1', '5', '10', '25'].forEach(v => { const c = mnEl('button', 'tp-chip', '$' + v); c.dataset.v = v; c.onclick = () => { amt = v; custom.value = ''; paint(); }; chips.append(c); });
+  custom.oninput = () => { amt = custom.value.trim(); paint(); };
+  card.append(chips, custom);
+  let addr = null;
+  if (known) card.append(mnEl('p', 'tp-s', 'To ' + mnShort(known.addr)));
+  else { addr = mnIn('Paste @' + who + '’s Ethereum address (0x…)', 'text'); card.append(addr); }
+  const err = mnEl('div', 'mn-err'); card.append(err);
+  const row = mnEl('div', 'mn-row');
+  row.append(mnBtn('Cancel', () => ov.remove(), 'ghost'), mnBtn('Continue', async () => {
+    err.textContent = '';
+    try {
+      await mnEthers();
+      if (!(parseFloat(amt) > 0)) throw new Error('Pick or enter an amount.');
+      if (addr) {
+        if (!ethers.isAddress(addr.value.trim())) throw new Error('That isn’t a valid Ethereum address.');
+        money.s.contacts.push({ name: who, addr: ethers.getAddress(addr.value.trim()) }); moneySave();
+      }
+      money.sendAsset = 'USDC'; money.sendTo = '@' + who; money.sendAmt = amt; money.tab = 'wallet';
+      ov.remove();
+      if (!moneyPanelOpen()) railToggleProgram('money');
+      if (money.wallet) { await moneyRefresh(); try { await moneyPrepare('USDC', '@' + who, amt); money.view = 'confirm'; } catch (e) { money.view = null; } moneyRender(); }
+    } catch (e) { err.textContent = e.shortMessage || e.message; }
+  }));
+  card.append(row); ov.onclick = e => { if (e.target === ov) ov.remove(); };
+  document.body.append(ov); paint();
+}
 </script>
 </body>
 </html>
